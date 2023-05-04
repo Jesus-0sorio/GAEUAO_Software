@@ -16,7 +16,7 @@ export const Searchbar = ({ items }) => {
 
 	return (
 		<>
-			<div className='grid grid-cols-9 divide-x w-full max-w-xl mx-auto mt-28 border border-gray-500 rounded-full items-center'>
+			<div className='grid grid-cols-9 divide-x w-full max-w-xl mx-auto border border-gray-500 rounded-full items-center'>
 				<div className='flex justify-center items-center col-span-2 bg-red-600 text-white h-full border rounded-s-full'>
 					<span>Asignatura:</span>
 				</div>
