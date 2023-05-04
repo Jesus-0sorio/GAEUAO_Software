@@ -13,7 +13,7 @@ export const Start = () => {
 	};
 	return (
 		<div className='h-[94vh] pt-24 overflow-hidden'>
-			<div className='pb-11 bg-UAO2 bg-center bg-no-repeat bg-cover flex flex-col justify-evenly items-center h-full overflow-hidden  gap-3'>
+			<div className='pb-11 bg-UAO2 bg-center bg-no-repeat bg-cover flex flex-col justify-evenly items-center h-full overflow-hidden gap-3'>
 				<h1 className='text-5xl font-bold text-white'>
 					Sistema gestor de asesorias
 				</h1>

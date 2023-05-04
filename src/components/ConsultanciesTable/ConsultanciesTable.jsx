@@ -6,8 +6,6 @@ export const ConsultanciesTable = ({ title, header, items }) => {
 	const [dataLoaded, setDataLoaded] = useState(false);
 
 	useEffect(() => {
-		setCols(header.length);
-		setPaths(header.map((item) => item.path));
 		setDataLoaded(true);
 	}, [header]);
 
