@@ -170,9 +170,8 @@ export const Home = () => {
 
 	return (
 		<>
-			<br />
-			<div className='select-none grid grid-cols-3'>
-				<div className='flex flex-col col-span-2 items-center '>
+			<div className='select-none grid grid-cols-3 pt-32'>
+				<div className='flex flex-col col-span-2 items-center'>
 					<Searchbar items={items} />
 					<br />
 					<ConsultanciesTable
