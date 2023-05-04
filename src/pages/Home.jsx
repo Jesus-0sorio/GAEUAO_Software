@@ -1,37 +1,198 @@
-import { useState } from 'react';
-import { Login } from '../components/Login';
+import React, { useState } from 'react';
+import { ConsultanciesTable } from '../components/ConsultanciesTable/ConsultanciesTable';
+import { Searchbar } from '../components/Home/SearchBar';
+import { NotificationsTable } from '../components/NotificationsTable/NotificationsTable';
 
 export const Home = () => {
-	const [modalState, setModalState] = useState('hidden');
+	const [items, setItems] = React.useState([
+		{ value: 1, label: 'Cálculo' },
+		{ value: 2, label: 'Física' },
+		{ value: 3, label: 'Algoritmia y Programación' },
+	]);
 
-	const handleModal = (visible) => {
-		if (visible) {
-			setModalState('block');
-		} else {
-			setModalState('hidden');
-		}
-	};
+	const [consultancies, setConsultancies] = React.useState([
+		{
+			id: 1,
+			advisor: {
+				name: 'Juan Perez',
+				photo: 'link',
+				career: 'Ing. Informatica',
+			},
+			subject: 'Cálculo 1',
+			schedule: {
+				day: 'Jueves',
+				date: 'Mayo 11, 2023',
+				time: '10:00 - 11:00',
+			},
+			classRoom: {
+				label: '4011',
+				place: 'Aulas 4',
+				floor: 'Piso 1',
+				room: 'Salón 1',
+			},
+			status: 'Próximo',
+		},
+		{
+			id: 2,
+			advisor: {
+				name: 'Juan Perez',
+				photo: 'link',
+				career: 'Ing. Informatica',
+			},
+			subject: 'Cálculo 1',
+			schedule: {
+				day: 'Jueves',
+				date: 'Mayo 11, 2023',
+				time: '10:00 - 11:00',
+			},
+			classRoom: {
+				label: '4011',
+				place: 'Aulas 4',
+				floor: 'Piso 1',
+				room: 'Salón 1',
+			},
+			status: 'Próximo',
+		},
+		{
+			id: 3,
+			advisor: {
+				name: 'Juan Perez',
+				photo: 'link',
+				career: 'Ing. Informatica',
+			},
+			subject: 'Cálculo 1',
+			schedule: {
+				day: 'Jueves',
+				date: 'Mayo 11, 2023',
+				time: '10:00 - 11:00',
+			},
+			classRoom: {
+				label: '4011',
+				place: 'Aulas 4',
+				floor: 'Piso 1',
+				room: 'Salón 1',
+			},
+			status: 'Próximo',
+		},
+		{
+			id: 4,
+			advisor: {
+				name: 'Juan Perez',
+				photo: 'link',
+				career: 'Ing. Informatica',
+			},
+			subject: 'Cálculo 1',
+			schedule: {
+				day: 'Jueves',
+				date: 'Mayo 11, 2023',
+				time: '10:00 - 11:00',
+			},
+			classRoom: {
+				label: '4011',
+				place: 'Aulas 4',
+				floor: 'Piso 1',
+				room: 'Salón 1',
+			},
+			status: 'Completado',
+		},
+	]);
+
+	const [completedConsultancies, setCompletedConsultancies] = useState([
+		{
+			advisor: {
+				name: 'Juan Perez',
+				photo: 'link',
+				career: 'Ing. Informatica',
+			},
+			subject: 'Cálculo 1',
+			schedule: {
+				day: 'Jueves',
+				date: 'Mayo 11, 2023',
+				time: '10:00 - 11:00',
+			},
+			classRoom: {
+				label: '4011',
+				place: 'Aulas 4',
+				floor: 'Piso 1',
+				room: 'Salón 1',
+			},
+			status: 'Sin calificar',
+		},
+		{
+			advisor: {
+				name: 'Juan Perez',
+				photo: 'link',
+				career: 'Ing. Informatica',
+			},
+			subject: 'Cálculo 1',
+			schedule: {
+				day: 'Jueves',
+				date: 'Mayo 11, 2023',
+				time: '10:00 - 11:00',
+			},
+			classRoom: {
+				label: '4011',
+				place: 'Aulas 4',
+				floor: 'Piso 1',
+				room: 'Salón 1',
+			},
+			status: 'Sin calificar',
+		},
+		{
+			advisor: {
+				name: 'Juan Perez',
+				photo: 'link',
+				career: 'Ing. Informatica',
+			},
+			subject: 'Cálculo 1',
+			schedule: {
+				day: 'Jueves',
+				date: 'Mayo 11, 2023',
+				time: '10:00 - 11:00',
+			},
+			classRoom: {
+				label: '4011',
+				place: 'Aulas 4',
+				floor: 'Piso 1',
+				room: 'Salón 1',
+			},
+			status: 'Sin calificar',
+		},
+	]);
+
+	const [header, setHeader] = useState([
+		{ label: 'Asesor', path: 'advisor' },
+		{ label: 'Asignatura', path: 'subject' },
+		{ label: 'Fecha', path: 'date' },
+		{ label: 'Salón', path: 'room' },
+		{ label: 'Estado', path: '' },
+	]);
+
 	return (
-		<div className='h-[94vh] pt-24 overflow-hidden'>
-			<div className='pb-11 bg-UAO2 bg-center bg-no-repeat bg-cover flex flex-col justify-evenly items-center h-full overflow-hidden  gap-3'>
-				<h1 className='text-5xl font-bold text-white'>
-					Sistema gestor de asesorias
-				</h1>
-				<div className='w-[45rem] border rounded border-transparent h-96 bg-black'>
-					a
+		<>
+			<br />
+			<div className='select-none grid grid-cols-3'>
+				<div className='flex flex-col col-span-2 items-center '>
+					<Searchbar items={items} />
+					<br />
+					<ConsultanciesTable
+						title={`Encuentros`}
+						header={header}
+						items={consultancies}
+					/>
+
+					<br />
+					<ConsultanciesTable
+						title={`Encuentros pasados`}
+						header={header}
+						items={completedConsultancies}
+					/>
 				</div>
-				<button
-					onClick={() => handleModal(true)}
-					htmlFor='my-modal-4'
-					className='bg-red-600 w-80 text-3xl text-white h-16 border border-transparent rounded-md'>
-					Iniciar sesion
-				</button>
+				<div className='flex flex-col items-center mt-12'>
+					<br />
+					<NotificationsTable />
+				</div>
 			</div>
-			<footer className='absolute bottom-0 bg-red-600 w-screen h-14' />
-			<Login
-				handleModal={handleModal}
-				visible={modalState}
-			/>
-		</div>
+		</>
 	);
 };

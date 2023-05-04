@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { NavBar } from './components/NavBar';
+import { Start } from './pages/Start';
 import { Home } from './pages/Home';
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
 			<Routes>
 				<Route
 					path='/'
-					element={<Home />}
+					element={<Start />}
 				/>
 				<Route
 					path='/pilos'
@@ -18,6 +19,10 @@ function App() {
 				<Route
 					path='/excelencia'
 					element={<h1>Excelencia</h1>}
+				/>
+				<Route
+					path='/inicio'
+					element={<Home />}
 				/>
 			</Routes>
 		</>
