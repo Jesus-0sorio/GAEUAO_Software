@@ -25,7 +25,7 @@ export const ConsultancyItem = ({ item, className }) => {
 						className='border rounded-full w-1/4 mx-3 my-2'
 					/>
 					<div className='flex flex-col'>
-						<h1>{ item.advisor.name }</h1>
+						<h1 className='sm:text-sm'>{ item.advisor.name }</h1>
 						<h2 className='text-xs'>{ item.advisor.career }</h2>
 					</div>
 				</div>
