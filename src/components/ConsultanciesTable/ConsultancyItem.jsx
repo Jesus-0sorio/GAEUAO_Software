@@ -1,12 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TbPointFilled } from "react-icons/tb";
+import { Modal } from '../Modal';
+import { ConsultancyModal } from './ConsultancyModal';
 
 export const ConsultancyItem = ({ item, className }) => {
+	const [modalState, setModalState] = useState('hidden');
+
+	const handleModal = (visible) => {
+		if (visible) {
+			setModalState('block');
+		} else {
+			setModalState('hidden');
+		}
+	};
 
 
 	return (
 		<>
-			<div className={`grid grid-cols-5 text-center border ${className}`}>
+			<div className={`grid grid-cols-5 text-center border ${className}`} onClick={() => handleModal(true)}>
 				<div className='flex w-auto col-span-1 items-center'>
 					<img
 						src='https://randomuser.me/api/portraits/men/18.jpg'
@@ -36,6 +47,12 @@ export const ConsultancyItem = ({ item, className }) => {
 					<h1>{ item.status }</h1>
 				</div>
 			</div>
+			<Modal
+				handleModal={handleModal}
+				visible={modalState}
+				id={item.id}
+				component={<ConsultancyModal id={item.id}/>}
+			/>
 		</>
 	);
 };

@@ -12,6 +12,7 @@ export const Home = () => {
 
 	const [consultancies, setConsultancies] = React.useState([
 		{
+			id: 1,
 			advisor: {
 				name: 'Juan Perez',
 				photo: 'link',
@@ -32,6 +33,7 @@ export const Home = () => {
 			status: 'Próximo',
 		},
 		{
+			id: 2,
 			advisor: {
 				name: 'Juan Perez',
 				photo: 'link',
@@ -52,6 +54,7 @@ export const Home = () => {
 			status: 'Próximo',
 		},
 		{
+			id: 3,
 			advisor: {
 				name: 'Juan Perez',
 				photo: 'link',
@@ -72,6 +75,7 @@ export const Home = () => {
 			status: 'Próximo',
 		},
 		{
+			id: 4,
 			advisor: {
 				name: 'Juan Perez',
 				photo: 'link',

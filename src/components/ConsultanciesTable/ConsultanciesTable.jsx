@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ConsultancyItem } from './ConsultancyItem';
 
 export const ConsultanciesTable = ({ title, header, items }) => {
-	const [cols, setCols] = useState('');
-	const [paths, setPaths] = useState('');
+	
 	const [dataLoaded, setDataLoaded] = useState(false);
 
 	useEffect(() => {
