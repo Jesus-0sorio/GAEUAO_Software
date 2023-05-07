@@ -1,11 +1,14 @@
 import React from 'react';
 
-export const ConsultancyModal = ({ id }) => {
+export const ConsultancyModal = ({ id, handleModal }) => {
 	return (
 		<>
-			<div className='grid grid-cols-2 p-2'>
-				<div className='border rounded-xl p-2'>
-					<div className='flex space-x-5'>
+			<div className='grid grid-cols-2 p-2 h-5/6 space-x-2'>
+				<div className='border border-gray-300 rounded-xl p-2 shadow-xl'>
+					<h1 className='rounded-t-xl bg-red-600 text-white'>
+						Detalles Asesor
+					</h1>
+					<div className='flex space-x-5 my-4 px-2'>
 						<img
 							src='https://randomuser.me/api/portraits/men/99.jpg'
 							alt=''
@@ -13,22 +16,73 @@ export const ConsultancyModal = ({ id }) => {
 						/>
 						<div className='flex flex-col justify-center'>
 							<h1 className='font-bold'>Pepito Perez</h1>
-							<h2 className='text-xs'>Ing. Informatica</h2>
+							<div className='text-xs'>Ing. Informatica</div>
 						</div>
 					</div>
-                    <br />
-					<div className='text-center'>
-						<h1>Asesorias de:</h1>
-						<h2>Calculo diferencial</h2>
-						<h2>Fisica</h2>
+					<div className='text-left'>
+						<h1 className='font-bold'>Asesorias de:</h1>
+						<ul className='list-disc ps-6'>
+							<li>Calculo diferencial</li>
+							<li>Fisica</li>
+							<li>Calculo integral</li>
+							<li>Algoritmia y Programación</li>
+						</ul>
 					</div>
 				</div>
-                <div>
-                    
-                </div>
+				<div className='border border-gray-300 rounded-xl p-2 shadow-xl'>
+					<h1 className='rounded-t-xl bg-red-600 text-white'>
+						Detalles Asesoria
+					</h1>
+					<div className='text-center p-3 grid grid-cols-2'>
+						<div className='space-y-2'>
+							<div className='leading-none'>
+								<h1 className='font-bold text-sm'>Asignatura</h1>
+								<span className='text-sm'>Calculo 1</span>
+							</div>
+							<div className='leading-none'>
+								<h1 className='font-bold text-sm'>Fecha</h1>
+								<span className='text-sm'>12/12/2021</span>
+							</div>
+							<div className='leading-none'>
+								<h1 className='font-bold text-sm'>Hora</h1>
+								<span className='text-sm'>12:00 - 1:00</span>
+							</div>
+						</div>
+						<div className='space-y-2'>
+							<div className='leading-none'>
+								<h1 className='font-bold text-sm'>Salón</h1>
+								<span className='text-sm'>4101</span>
+							</div>
+							<div className='leading-none'>
+								<h1 className='font-bold text-sm'>Aulas</h1>
+								<span className='text-sm'>4</span>
+							</div>
+							<div className='leading-none'>
+								<h1 className='font-bold text-sm'>Piso</h1>
+								<span className='text-sm'>1</span>
+							</div>
+							<h1></h1>
+						</div>
+						<div className='col-span-2'>
+							<h1 className='font-bold text-sm'>Tema</h1>
+							<p className='text-sm'>Derivadar por metodo... arreglar el max h</p>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div className='text-right'>
-				<button>fsd</button>
+			<div className='flex col-span-2 justify-end pt-4'>
+				<button
+					type='button'
+					className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+					Cancelar
+				</button>
+				<button
+					onClick={() => handleModal(false)}
+					type='button'
+					className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+					Cerrar
+				</button>
+				{/* Hacer modal para confirmar si quiere cancelar */}
 			</div>
 		</>
 	);

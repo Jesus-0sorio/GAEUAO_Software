@@ -20,7 +20,7 @@ export const Modal = ({ component, visible, handleModal }) => {
 		<div
 			ref={modalBgRef}
 			id='modalBg'
-			className={`fixed inset-0 ${visible}`}>
+			className={`fixed z-20 inset-0 ${visible}`}>
 			<div className='flex items-center justify-center min-h-screen pt-4 pb-20 text-center'>
 				<div
 					id='modal'

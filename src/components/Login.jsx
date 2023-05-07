@@ -4,6 +4,7 @@ import {
 	HiOutlineMailOpen,
 	HiOutlineUserCircle,
 } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = ({ handleModal, visible }) => {
 	const modalRef = useRef(null);
@@ -20,6 +21,12 @@ export const Login = ({ handleModal, visible }) => {
 
 		return () => window.removeEventListener('click', handleClick);
 	}, [modalRef]);
+
+	const navigate = useNavigate();
+
+	const login = () => {
+		navigate('/inicio');
+	};
 	return (
 		<div
 			ref={modalBgRef}
@@ -63,7 +70,7 @@ export const Login = ({ handleModal, visible }) => {
 												placeholder='********'
 											/>
 										</div>
-										<button className='mt-2 bg-red-600 w-full text-white h-10 rounded-md'>
+										<button onClick={login} className='mt-2 bg-red-600 w-full text-white h-10 rounded-md' >
 											Iniciar sesion
 										</button>
 									</div>
