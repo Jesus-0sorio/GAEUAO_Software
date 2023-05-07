@@ -40,7 +40,7 @@ export const Searchbar = ({ items }) => {
 					/>
 					<label
 						htmlFor='floating_outlined'
-						className='absolute text-sm scale-75 top-3 z-10 origin-[0] px-2 text-black -translate-y-3 left-1 select-none'>
+						className='absolute text-sm scale-75 top-3 origin-[0] px-2 text-black -translate-y-3 left-1 select-none'>
 						Fecha
 					</label>
 				</div>

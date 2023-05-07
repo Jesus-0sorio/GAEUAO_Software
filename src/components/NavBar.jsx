@@ -5,7 +5,7 @@ import UAOLogo from '../assets/UAO.svg';
 export const NavBar = () => {
 	return (
 		<>
-			<nav className='fixed w-screen   bg-white border-gray-200 border-b-2'>
+			<nav className='fixed w-screen z-10   bg-white border-gray-200 border-b-2'>
 				<div className='flex flex-wrap items-center justify-between mx-auto p-3'>
 					<div className='flex items-center gap-2'>
 						<Link

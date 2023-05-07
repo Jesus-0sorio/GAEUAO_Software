@@ -51,7 +51,7 @@ export const ConsultancyItem = ({ item, className }) => {
 				handleModal={handleModal}
 				visible={modalState}
 				id={item.id}
-				component={<ConsultancyModal id={item.id}/>}
+				component={<ConsultancyModal id={item.id} handleModal={handleModal}/>}
 			/>
 		</>
 	);
