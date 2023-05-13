@@ -6,8 +6,6 @@ import { Schedule } from './pages/Schedule';
 
 function App() {
 	return (
-		<>
-			<NavBar />
 			<Routes>
 				<Route
 					path='/'
@@ -30,8 +28,7 @@ function App() {
 					element={<Schedule />}
 				/>
 			</Routes>
-		</>
+		
 	);
 }
-
 export default App;
