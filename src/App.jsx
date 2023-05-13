@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { NavBar } from './components/NavBar';
 import { Start } from './pages/Start';
 import { Home } from './pages/Home';
+import { Schedule } from './pages/Schedule';
 
 function App() {
 	return (
@@ -23,6 +24,10 @@ function App() {
 				<Route
 					path='/inicio'
 					element={<Home />}
+				/>
+				<Route
+					path='/agendar'
+					element={<Schedule />}
 				/>
 			</Routes>
 		</>

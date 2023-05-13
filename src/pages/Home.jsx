@@ -4,11 +4,6 @@ import { Searchbar } from '../components/Home/SearchBar';
 import { NotificationsTable } from '../components/NotificationsTable/NotificationsTable';
 
 export const Home = () => {
-	const [items, setItems] = React.useState([
-		{ value: 1, label: 'Cálculo' },
-		{ value: 2, label: 'Física' },
-		{ value: 3, label: 'Algoritmia y Programación' },
-	]);
 
 	const [consultancies, setConsultancies] = React.useState([
 		{
@@ -93,7 +88,7 @@ export const Home = () => {
 				floor: 'Piso 1',
 				room: 'Salón 1',
 			},
-			status: 'Completado',
+			status: 'Sin calificar',
 		},
 	]);
 
@@ -116,7 +111,7 @@ export const Home = () => {
 				floor: 'Piso 1',
 				room: 'Salón 1',
 			},
-			status: 'Sin calificar',
+			status: 'Completado',
 		},
 		{
 			advisor: {
@@ -136,7 +131,7 @@ export const Home = () => {
 				floor: 'Piso 1',
 				room: 'Salón 1',
 			},
-			status: 'Sin calificar',
+			status: 'Completado',
 		},
 		{
 			advisor: {
@@ -156,7 +151,7 @@ export const Home = () => {
 				floor: 'Piso 1',
 				room: 'Salón 1',
 			},
-			status: 'Sin calificar',
+			status: 'Completado',
 		},
 	]);
 
@@ -172,12 +167,13 @@ export const Home = () => {
 		<>
 			<div className='select-none grid grid-cols-3 pt-32'>
 				<div className='flex flex-col col-span-2 items-center'>
-					<Searchbar items={items} />
+					{/* <Searchbar /> */}
 					<br />
 					<ConsultanciesTable
 						title={`Encuentros`}
 						header={header}
 						items={consultancies}
+						className='w-3/4'
 					/>
 
 					<br />
@@ -185,9 +181,10 @@ export const Home = () => {
 						title={`Encuentros pasados`}
 						header={header}
 						items={completedConsultancies}
+						className='w-3/4'
 					/>
 				</div>
-				<div className='flex flex-col items-center mt-12'>
+				<div className='flex flex-col items-center'>
 					<br />
 					<NotificationsTable />
 				</div>

@@ -29,7 +29,7 @@ export const Modal = ({ component, visible, handleModal }) => {
 					<div
 						className=' bg-white rounded-lg text-center overflow-hidden shadow-xl transform transition-all
         sm:my-8 sm:align-middle sm:max-w-2xl w-full'>
-						<div className='h-[28rem] bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 flex'>
+						<div className='h-[28rem] bg-white px-4 pt-5 pb-4 sm:p-4 sm:pb-4 flex'>
 							<div className='flex flex-col items-start w-full'>
 								<div className='modal-content text-center sm:text-center h-full w-full'>
 									{ component }

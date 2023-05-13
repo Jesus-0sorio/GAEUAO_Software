@@ -1,9 +1,10 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const ConsultancyModal = ({ id, handleModal }) => {
 	return (
 		<>
-			<div className='grid grid-cols-2 p-2 h-5/6 space-x-2'>
+			<div className='grid grid-cols-2 p-2 h-full space-x-2'>
 				<div className='border border-gray-300 rounded-xl p-2 shadow-xl'>
 					<h1 className='rounded-t-xl bg-red-600 text-white'>
 						Detalles Asesor
@@ -21,7 +22,7 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 					</div>
 					<div className='text-left'>
 						<h1 className='font-bold'>Asesorias de:</h1>
-						<ul className='list-disc ps-6'>
+						<ul className='list-disc ps-7'>
 							<li>Calculo diferencial</li>
 							<li>Fisica</li>
 							<li>Calculo integral</li>
@@ -29,7 +30,7 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 						</ul>
 					</div>
 				</div>
-				<div className='border border-gray-300 rounded-xl p-2 shadow-xl'>
+				<div className='border border-gray-300 rounded-xl pt-2 shadow-xl'>
 					<h1 className='rounded-t-xl bg-red-600 text-white'>
 						Detalles Asesoria
 					</h1>
@@ -64,25 +65,45 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 							<h1></h1>
 						</div>
 						<div className='col-span-2'>
-							<h1 className='font-bold text-sm'>Tema</h1>
-							<p className='text-sm'>Derivadar por metodo... arreglar el max h</p>
+							<h1 className='font-bold text-sm mb-2'>Tema</h1>
+
+							<textarea
+								cols='30'
+								rows='4'
+								placeholder='Tema de la asesorias...'
+								disabled={useLocation().pathname === '/inicio'}
+								className='border border-gray-300 rounded-lg w-full px-2 py-0.5'>
+								{useLocation().pathname === '/inicio'
+									? 'Derivadar por metodo... arreglar el max h'
+									: ''}
+							</textarea>
+						</div>
+
+						<div className='flex col-span-2 justify-end mt-3'>
+							{useLocation().pathname === '/inicio' ? (
+								<button
+									type='button'
+									className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+									Cancelar
+								</button>
+							) : (
+								<button
+									type='button'
+									className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+									Agendar
+								</button>
+							)}
+
+							<button
+								onClick={() => handleModal(false)}
+								type='button'
+								className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+								Cerrar
+							</button>
+							{/* Hacer modal para confirmar si quiere cancelar */}
 						</div>
 					</div>
 				</div>
-			</div>
-			<div className='flex col-span-2 justify-end pt-4'>
-				<button
-					type='button'
-					className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
-					Cancelar
-				</button>
-				<button
-					onClick={() => handleModal(false)}
-					type='button'
-					className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
-					Cerrar
-				</button>
-				{/* Hacer modal para confirmar si quiere cancelar */}
 			</div>
 		</>
 	);
