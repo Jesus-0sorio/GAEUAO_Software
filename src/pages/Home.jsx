@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ConsultanciesTable } from '../components/ConsultanciesTable/ConsultanciesTable';
 import { Searchbar } from '../components/Home/SearchBar';
 import { NotificationsTable } from '../components/NotificationsTable/NotificationsTable';
+import {NavBarStart} from '../components/NavBarStart';
 
 export const Home = () => {
 	const [items, setItems] = React.useState([
@@ -170,6 +171,8 @@ export const Home = () => {
 
 	return (
 		<>
+		<div>
+			<NavBarStart />
 			<div className='select-none grid grid-cols-3 pt-32'>
 				<div className='flex flex-col col-span-2 items-center'>
 					<Searchbar items={items} />
@@ -191,6 +194,7 @@ export const Home = () => {
 					<br />
 					<NotificationsTable />
 				</div>
+			</div>
 			</div>
 		</>
 	);
