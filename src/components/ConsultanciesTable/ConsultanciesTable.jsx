@@ -6,7 +6,7 @@ export const ConsultanciesTable = ({ title, header, items, className }) => {
 	const [dataLoaded, setDataLoaded] = useState(false);
 
 	useEffect(() => {
-		
+		console.log(header.length)
 	}, []);
 
 	return (

@@ -6,7 +6,7 @@ import { CiLogout, CiChat2, CiUser } from 'react-icons/ci';
 import { Modal } from './Modal';
 import { Profile } from '../pages/Profile';
 import { useDispatch } from 'react-redux';
-import { logout } from '../store/slices/authSlice';
+import { logout } from '../store/slices/auth/authSlice';
 
 export const NavBarStart = () => {
 	const dispatch = useDispatch();

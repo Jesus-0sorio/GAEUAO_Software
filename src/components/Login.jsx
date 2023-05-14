@@ -6,14 +6,15 @@ import {
 } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess, loginFail } from '../store/slices/authSlice';
-import { startLoading, stopLoading } from '../store/slices/loadingSlice';
+import { login } from '../store/slices/auth/thunks';
 
 export const Login = ({ handleModal, visible }) => {
 	const modalRef = useRef(null);
 	const modalBgRef = useRef(null);
 
 	const dispatch = useDispatch();
+
+	const { token } = useSelector((state) => state.auth);
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -43,29 +44,32 @@ export const Login = ({ handleModal, visible }) => {
 
 	const navigate = useNavigate();
 
-	const login = () => {
+	const onLogin = async () => {
 		if (email === '' || password === '') {
 			alert('Por favor ingrese todos los campos');
 			return;
 		}
-		dispatch(startLoading());
-		setTimeout(() => {
+		try {
 			dispatch(
-				loginSuccess({
-					user: {
-						name: 'Juan',
-						lastName: 'Perez',
-						email: email,
-					},
-					token: '123456789',
-				})
+				login(email, password)
 			);
-			dispatch(stopLoading());
-			navigate('/inicio');
-		}, 2000);
-		
-
+		} catch (error) {
+			alert('Error al iniciar sesión');
+			console.log(error);
+		} 
 	};
+
+	useEffect(() => {
+		if (localStorage.getItem('token')) {
+			navigate('/dashboard');
+		}
+	}, []);
+
+	useEffect(() => {
+		token && navigate('/inicio');
+		console.log('cuando carga la pg')
+	}, [token]);
+
 	return (
 		<div
 			ref={modalBgRef}
@@ -114,7 +118,7 @@ export const Login = ({ handleModal, visible }) => {
 											/>
 										</div>
 										<button
-											onClick={login}
+											onClick={onLogin}
 											className='mt-2 bg-red-600 w-full text-white h-10 rounded-md'>
 											Iniciar sesion
 										</button>
