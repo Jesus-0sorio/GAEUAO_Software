@@ -1,17 +1,36 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
 	HiOutlineLockClosed,
 	HiOutlineMailOpen,
 	HiOutlineUserCircle,
 } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess, loginFail } from '../store/slices/authSlice';
+import { startLoading, stopLoading } from '../store/slices/loadingSlice';
 
 export const Login = ({ handleModal, visible }) => {
 	const modalRef = useRef(null);
 	const modalBgRef = useRef(null);
+
+	const dispatch = useDispatch();
+
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const handleEmail = (e) => {
+		setEmail(e.target.value);
+	};
+
+	const handlePassword = (e) => {
+		setPassword(e.target.value);
+	};
+
 	useEffect(() => {
 		const handleClick = (e) => {
 			if (modalRef.current.id === e.target.id) {
+				setEmail('');
+				setPassword('');
 				handleModal(false);
 			} else if (e.target.id === 'modalBg') {
 				handleModal(true);
@@ -25,7 +44,27 @@ export const Login = ({ handleModal, visible }) => {
 	const navigate = useNavigate();
 
 	const login = () => {
-		navigate('/inicio');
+		if (email === '' || password === '') {
+			alert('Por favor ingrese todos los campos');
+			return;
+		}
+		dispatch(startLoading());
+		setTimeout(() => {
+			dispatch(
+				loginSuccess({
+					user: {
+						name: 'Juan',
+						lastName: 'Perez',
+						email: email,
+					},
+					token: '123456789',
+				})
+			);
+			dispatch(stopLoading());
+			navigate('/inicio');
+		}, 2000);
+		
+
 	};
 	return (
 		<div
@@ -53,6 +92,8 @@ export const Login = ({ handleModal, visible }) => {
 												<HiOutlineMailOpen size={'44'} />
 											</span>
 											<input
+												value={email}
+												onChange={handleEmail}
 												id='email'
 												type='email'
 												className='w-full h-12 p-3 border border-l-0 rounded-r-md border-black'
@@ -64,13 +105,17 @@ export const Login = ({ handleModal, visible }) => {
 												<HiOutlineLockClosed size={'44'} />
 											</span>
 											<input
+												value={password}
+												onChange={handlePassword}
 												id='password'
 												type='password'
 												className='w-52 h-12 p-3 border border-l-0 rounded-r-md border-black'
 												placeholder='********'
 											/>
 										</div>
-										<button onClick={login} className='mt-2 bg-red-600 w-full text-white h-10 rounded-md' >
+										<button
+											onClick={login}
+											className='mt-2 bg-red-600 w-full text-white h-10 rounded-md'>
 											Iniciar sesion
 										</button>
 									</div>

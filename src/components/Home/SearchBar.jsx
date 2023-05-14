@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import Select from 'react-tailwindcss-select';
 import { FaSearch } from 'react-icons/fa';
 
-export const Searchbar = ({ items }) => {
+export const Searchbar = ({  }) => {
+	const [items, setItems] = React.useState([
+		{ value: 1, label: 'Cálculo' },
+		{ value: 2, label: 'Física' },
+		{ value: 3, label: 'Algoritmia y Programación' },
+	]);
+
 	const [selectedItem, setSelectedItem] = useState('');
 	const [selectedDate, setSelectedDate] = useState('');
 
@@ -16,7 +22,7 @@ export const Searchbar = ({ items }) => {
 
 	return (
 		<>
-			<div className='grid grid-cols-9 divide-x w-full max-w-xl mx-auto border border-gray-500 rounded-full items-center'>
+			<div className='grid grid-cols-9 divide-x w-full max-w-2xl mx-auto border border-gray-500 rounded-full items-center'>
 				<div className='flex justify-center items-center col-span-2 bg-red-600 text-white h-full border rounded-s-full'>
 					<span>Asignatura:</span>
 				</div>
@@ -29,7 +35,9 @@ export const Searchbar = ({ items }) => {
 						placeholder='Seleccione...'
 						searchInputPlaceholder='Buscar'
 						noOptionsMessage='No encontrada'
-						classNames={``}
+						primaryColor='red'
+						isClearable={true}
+						classNames={{}}
 					/>
 				</div>
 				<div className='flex items-center col-span-2 h-full w-full relative'>

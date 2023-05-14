@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Modal } from '../Modal';
 
 export const ConsultancyModal = ({ id, handleModal }) => {
+	const location = useLocation();
+	const [disabled, setDisabled] = useState(true);
+
+	useEffect(() => {
+		if (location.pathname === '/agendar') {
+			setDisabled(false);
+		}
+	}, []);
+
+	const [cancelModalState, setCancelModalState] = useState('hidden');
+
+	const handleCancelModal = (visible) => {
+		if (visible) {
+			setCancelModalState('block');
+		} else {
+			setCancelModalState('hidden');
+		}
+	};
+
+	const [tema, setTema] = useState('');
+
 	return (
 		<>
-			<div className='grid grid-cols-2 p-2 h-5/6 space-x-2'>
+			<div className='grid grid-cols-2 p-2 h-full space-x-2'>
 				<div className='border border-gray-300 rounded-xl p-2 shadow-xl'>
 					<h1 className='rounded-t-xl bg-red-600 text-white'>
 						Detalles Asesor
@@ -21,7 +44,7 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 					</div>
 					<div className='text-left'>
 						<h1 className='font-bold'>Asesorias de:</h1>
-						<ul className='list-disc ps-6'>
+						<ul className='list-disc ps-7'>
 							<li>Calculo diferencial</li>
 							<li>Fisica</li>
 							<li>Calculo integral</li>
@@ -29,7 +52,7 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 						</ul>
 					</div>
 				</div>
-				<div className='border border-gray-300 rounded-xl p-2 shadow-xl'>
+				<div className='border border-gray-300 rounded-xl pt-2 shadow-xl'>
 					<h1 className='rounded-t-xl bg-red-600 text-white'>
 						Detalles Asesoria
 					</h1>
@@ -64,26 +87,64 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 							<h1></h1>
 						</div>
 						<div className='col-span-2'>
-							<h1 className='font-bold text-sm'>Tema</h1>
-							<p className='text-sm'>Derivadar por metodo... arreglar el max h</p>
+							<h1 className='font-bold text-sm mb-2'>Tema</h1>
+
+							<textarea
+								value={tema}
+								onChange={(e) => setTema(e.target.value)}
+								cols='30'
+								rows='4'
+								placeholder='Tema de la asesorias...'
+								disabled={disabled}
+								className={`border border-gray-300 rounded-lg w-full px-2 py-0.5`}
+							/>
+						</div>
+
+						<div className='flex col-span-2 justify-end mt-3'>
+							{disabled ? (
+								<button
+									onClick={() => handleCancelModal(true)}
+									type='button'
+									className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+									Cancelar
+								</button>
+							) : (
+								<button
+									type='button'
+									className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+									Agendar
+								</button>
+							)}
+
+							<button
+								onClick={() => handleModal(false)}
+								type='button'
+								className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+								Cerrar
+							</button>
+							{/* Hacer modal para confirmar si quiere cancelar */}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className='flex col-span-2 justify-end pt-4'>
-				<button
-					type='button'
-					className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
-					Cancelar
-				</button>
-				<button
-					onClick={() => handleModal(false)}
-					type='button'
-					className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
-					Cerrar
-				</button>
-				{/* Hacer modal para confirmar si quiere cancelar */}
-			</div>
+
+			<Modal
+				handleModal={handleCancelModal}
+				visible={cancelModalState}
+				id={id}
+				component={
+					<>
+						<div className='flex flex-col'>
+							<h1>¿Seguro que quiere cancelar?</h1>
+							<div className='mt-3'>
+								<button className='text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2'>Cancelar</button>
+								<button onClick={() => handleCancelModal(false)}
+								className=' text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2'>No cancelar</button>
+							</div>
+						</div>
+					</>
+				}
+			/>
 		</>
 	);
 };
