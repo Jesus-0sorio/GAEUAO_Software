@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Searchbar } from '../components/Home/SearchBar';
 import { ConsultanciesTable } from '../components/ConsultanciesTable/ConsultanciesTable';
+import { NavBarStart } from '../components/NavBarStart';
 
 export const Schedule = () => {
 	const [consultancies, setConsultancies] = React.useState([
@@ -94,6 +95,7 @@ export const Schedule = () => {
 	]);
 	return (
 		<>
+			<NavBarStart />
 			<div className='flex flex-col items-center pt-32'>
 				<Searchbar />
 				<br />

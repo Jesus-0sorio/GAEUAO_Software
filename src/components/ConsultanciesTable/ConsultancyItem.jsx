@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TbPointFilled } from 'react-icons/tb';
 import { Modal } from '../Modal';
 import { ConsultancyModal } from './ConsultancyModal';
+import { useLocation } from 'react-router-dom';
 
 export const ConsultancyItem = ({ item, cols, className, header }) => {
 	const [modalState, setModalState] = useState('hidden');
@@ -14,12 +15,14 @@ export const ConsultancyItem = ({ item, cols, className, header }) => {
 		}
 	};
 
+
+
 	return (
 		<>
 			<div
 				className={`grid grid-cols-${cols} text-center border ${className}`}
 				onClick={() => handleModal(true)}>
-				<div className='flex w-auto col-span-1 items-center'>
+				<div className='flex w-auto items-center'>
 					<img
 						src='https://randomuser.me/api/portraits/men/18.jpg'
 						alt=''
