@@ -1,91 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Searchbar } from '../components/Home/SearchBar';
 import { ConsultanciesTable } from '../components/ConsultanciesTable/ConsultanciesTable';
-import { NavBarStart } from '../components/NavBarStart';
+import { consultaciesServices } from '../services/consultanciesServices';
+import { useSelector } from 'react-redux';
 
 export const Schedule = () => {
-	const [consultancies, setConsultancies] = React.useState([
-		{
-			id: 1,
-			advisor: {
-				name: 'Juan Perez',
-				photo: 'link',
-				career: 'Ing. Informatica',
-			},
-			subject: 'Cálculo 1',
-			schedule: {
-				day: 'Jueves',
-				date: 'Mayo 11, 2023',
-				time: '10:00 - 11:00',
-			},
-			classRoom: {
-				label: '4011',
-				place: 'Aulas 4',
-				floor: 'Piso 1',
-				room: 'Salón 1',
-			},
-		},
-		{
-			id: 2,
-			advisor: {
-				name: 'Juan Perez',
-				photo: 'link',
-				career: 'Ing. Informatica',
-			},
-			subject: 'Cálculo 1',
-			schedule: {
-				day: 'Jueves',
-				date: 'Mayo 11, 2023',
-				time: '10:00 - 11:00',
-			},
-			classRoom: {
-				label: '4011',
-				place: 'Aulas 4',
-				floor: 'Piso 1',
-				room: 'Salón 1',
-			},
-		},
-		{
-			id: 3,
-			advisor: {
-				name: 'Juan Perez',
-				photo: 'link',
-				career: 'Ing. Informatica',
-			},
-			subject: 'Cálculo 1',
-			schedule: {
-				day: 'Jueves',
-				date: 'Mayo 11, 2023',
-				time: '10:00 - 11:00',
-			},
-			classRoom: {
-				label: '4011',
-				place: 'Aulas 4',
-				floor: 'Piso 1',
-				room: 'Salón 1',
-			},
-		},
-		{
-			id: 4,
-			advisor: {
-				name: 'Juan Perez',
-				photo: 'link',
-				career: 'Ing. Informatica',
-			},
-			subject: 'Cálculo 1',
-			schedule: {
-				day: 'Jueves',
-				date: 'Mayo 11, 2023',
-				time: '10:00 - 11:00',
-			},
-			classRoom: {
-				label: '4011',
-				place: 'Aulas 4',
-				floor: 'Piso 1',
-				room: 'Salón 1',
-			},
-		},
-	]);
+	const [consultancies, setConsultancies] = useState([]);
+	const [allConsultanices, setAllConsultancies] = useState([]);
+	const [subjects, setSubjects] = useState([]);
 
 	const [header, setHeader] = useState([
 		{ label: 'Asesor', path: 'advisor' },
@@ -93,16 +15,59 @@ export const Schedule = () => {
 		{ label: 'Fecha', path: 'date' },
 		{ label: 'Salón', path: 'room' },
 	]);
+
+	const [subject, setSubject] = useState();
+
+	const { token } = useSelector((state) => state.auth);
+
+	const getAllConsultancies = async () => {
+		try {
+			const res = await consultaciesServices.getAllConsultancies(
+				token.access_token
+			);
+			console.log(res.data)
+			setConsultancies(res.data);
+			setAllConsultancies(res.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const getConsultancies = async (id) => {
+		console.log(id)
+		if (id == '' || id == null) {
+			setConsultancies(allConsultanices);
+		}
+		try {
+			const res = await consultaciesServices.getConsultanciesBySubject(
+				id,
+				token.access_token
+			);
+			console.log(res.data)
+			setConsultancies(res.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		getAllConsultancies();
+	}, [Schedule]);
+
+
 	return (
 		<>
-			<NavBarStart />
 			<div className='flex flex-col items-center pt-32'>
-				<Searchbar />
+				<Searchbar
+					item={subjects}
+					getConsultancies={getConsultancies}
+				/>
 				<br />
 				<ConsultanciesTable
 					title={`Encuentros`}
 					header={header}
 					items={consultancies}
+					className={'w-1/2'}
 				/>
 			</div>
 		</>

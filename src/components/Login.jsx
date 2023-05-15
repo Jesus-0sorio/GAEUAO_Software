@@ -6,8 +6,8 @@ import {
 } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess, loginFail } from '../store/slices/authSlice';
-import { startLoading, stopLoading } from '../store/slices/loadingSlice';
+import { login } from '../store/slices/auth/thunks';
+import  Swal  from 'sweetalert2';
 
 export const Login = ({ handleModal, visible }) => {
 	const modalRef = useRef(null);
@@ -15,8 +15,10 @@ export const Login = ({ handleModal, visible }) => {
 
 	const dispatch = useDispatch();
 
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const { token } = useSelector((state) => state.auth);
+
+	const [email, setEmail] = useState('prueba@gmail.com');
+	const [password, setPassword] = useState('12345678');
 
 	const handleEmail = (e) => {
 		setEmail(e.target.value);
@@ -43,29 +45,34 @@ export const Login = ({ handleModal, visible }) => {
 
 	const navigate = useNavigate();
 
-	const login = () => {
+	const onLogin = async () => {
 		if (email === '' || password === '') {
-			alert('Por favor ingrese todos los campos');
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Llene todos los campos por favor!',
+			});
 			return;
 		}
-		dispatch(startLoading());
-		setTimeout(() => {
-			dispatch(
-				loginSuccess({
-					user: {
-						name: 'Juan',
-						lastName: 'Perez',
-						email: email,
-					},
-					token: '123456789',
-				})
-			);
-			dispatch(stopLoading());
-			navigate('/inicio');
-		}, 2000);
-		
-
+		try {
+			dispatch(login(email, password));
+		} catch (error) {
+			alert('Error al iniciar sesión');
+			console.log(error);
+		}
 	};
+
+	useEffect(() => {
+		if (localStorage.getItem('token')) {
+			navigate('/dashboard');
+		}
+	}, []);
+
+	useEffect(() => {
+		token && navigate('/inicio');
+		// console.log('cuando carga la pg')
+	}, [token]);
+
 	return (
 		<div
 			ref={modalBgRef}
@@ -100,6 +107,7 @@ export const Login = ({ handleModal, visible }) => {
 												placeholder='email@example.com'
 											/>
 										</div>
+
 										<div className='flex items-center'>
 											<span className='border border-black rounded-l-md border-r-0 h-12'>
 												<HiOutlineLockClosed size={'44'} />
@@ -114,7 +122,7 @@ export const Login = ({ handleModal, visible }) => {
 											/>
 										</div>
 										<button
-											onClick={login}
+											onClick={onLogin}
 											className='mt-2 bg-red-600 w-full text-white h-10 rounded-md'>
 											Iniciar sesion
 										</button>

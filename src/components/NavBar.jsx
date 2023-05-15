@@ -23,7 +23,7 @@ export const NavBar = () => {
 							<ul className='font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-white'>
 								<li>
 									<NavLink
-										to='/'
+										to='https://sitios.uao.edu.co/excelencia/documentos/'
 										className={({ isActive }) =>
 											(isActive
 												? ' text-white md:text-red-700 md:bg-transparent'
@@ -36,7 +36,7 @@ export const NavBar = () => {
 								</li>
 								<li>
 									<NavLink
-										to='/excelencia'
+										to='https://sitios.uao.edu.co/excelencia/'
 										className={({ isActive }) =>
 											(isActive
 												? 'text-white md:text-red-700 md:bg-transparent'
@@ -48,7 +48,7 @@ export const NavBar = () => {
 								</li>
 								<li>
 									<NavLink
-										to='/pilos'
+										to='https://sitios.uao.edu.co/excelencia/pilos-generacion-e/'
 										className={({ isActive }) =>
 											(isActive
 												? 'text-white md:text-red-700 md:bg-transparent'

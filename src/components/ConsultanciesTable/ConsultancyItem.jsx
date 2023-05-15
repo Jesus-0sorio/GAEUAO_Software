@@ -15,7 +15,8 @@ export const ConsultancyItem = ({ item, cols, className, header }) => {
 		}
 	};
 
-
+	let startTime = item.start_time.split(':');
+	let endTime = item.end_time.split(':');
 
 	return (
 		<>
@@ -29,32 +30,44 @@ export const ConsultancyItem = ({ item, cols, className, header }) => {
 						className='border rounded-full w-1/4 mx-3 my-2'
 					/>
 					<div className='flex flex-col'>
-						<h1 className='sm:text-sm'>{item.advisor.name}</h1>
-						<h2 className='text-xs'>{item.advisor.career}</h2>
+						<h1 className='sm:text-sm'>
+							{item.professor_id
+								? item.professor_id.name
+								: item.monitor_id.name}
+						</h1>
+						<h2 className='text-xs'>
+							{item.professor_id
+								? item.professor_id.degree
+								: item.monitor_id.career}
+						</h2>
 					</div>
 				</div>
 				<div className='flex items-center justify-center'>
-					<h1 className='text-sm'>{item.subject}</h1>
+					<h1 className='text-sm'>{item.subject_id.name}</h1>
 				</div>
 				<div className='flex flex-col items-center justify-center'>
-					<h1 className='text-xs'>{item.schedule.date}</h1>
-					<h2 className='text-xs'>{item.schedule.day}</h2>
-					<h2 className='text-xs'>{item.schedule.time}</h2>
+					<h1 className='text-xs'>{item.monitor_date}</h1>
+					{/* <h2 className='text-xs'>{item.schedule.day}</h2> */}
+					<h2 className='text-xs'>{`${startTime[0]}:${startTime[1]} - ${endTime[0]}:${endTime[1]}`}</h2>
 				</div>
 				<div className='flex flex-col items-center justify-center'>
-					<h1 className='text-xs'>{item.classRoom.label}</h1>
-					<h2 className='text-xs'>{item.classRoom.place}</h2>
+					<h1 className='text-xs'>{item.classroom}</h1>
+					<h2 className='text-xs'>{`Aulas ${item.classroom.split('')[0]}`}</h2>
 					<h2 className='text-xs'>
-						{item.classRoom.floor} {item.classRoom.room}
+						{`Piso ${item.classroom.split('')[1]} Salón ${
+							item.classroom.split('')[3]
+						}`}
 					</h2>
 				</div>
 
 				{header.some((objeto) => objeto.label === 'Estado') ? (
 					<div className='flex items-center justify-center'>
 						<TbPointFilled
-							color={`${item.status === 'Próximo' ? 'green' : 'red'}`}
+							color={`${
+								item.monitoring_status === 'Proxima' ? 'green' : 'red'
+							}`}
 						/>
-						<h1>{item.status}</h1>
+						<h1>{item.monitoring_status}</h1>
 					</div>
 				) : (
 					<></>
@@ -67,7 +80,7 @@ export const ConsultancyItem = ({ item, cols, className, header }) => {
 				id={item.id}
 				component={
 					<ConsultancyModal
-						id={item.id}
+						item={item}
 						handleModal={handleModal}
 					/>
 				}

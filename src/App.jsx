@@ -5,6 +5,8 @@ import { Schedule } from './pages/Schedule';
 import { Loading } from './components/Loading';
 import { useSelector } from 'react-redux';
 import { PrivateRoutes } from './components/PrivateRoutes';
+import { History } from './pages/History';
+import { NavBarStart } from './components/NavBarStart';
 
 function App() {
 	const { isLoading } = useSelector((state) => state.loading);
@@ -29,6 +31,7 @@ function App() {
 					path='/*'
 					element={
 						<PrivateRoutes>
+							<NavBarStart />
 							<Routes>
 								<Route
 									path='/inicio'
@@ -39,8 +42,8 @@ function App() {
 									element={<Schedule />}
 								/>
 								<Route
-									path='/prueba'
-									element={<Loading />}
+									path='/historial'
+									element={<History />}
 								/>
 							</Routes>
 						</PrivateRoutes>

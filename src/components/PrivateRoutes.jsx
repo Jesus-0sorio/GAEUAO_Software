@@ -4,10 +4,10 @@ import { Navigate } from "react-router-dom";
 
 export const PrivateRoutes = ({ children }) => {
 
-    const { user } = useSelector((state) => state.auth);
+    const { token } = useSelector((state) => state.auth);
     useEffect(() => {
-        console.log(user);
-    }, [user]);
+        console.log(token);
+    }, [token]);
 
-    return user ? children : <Navigate to="/" />;
+    return token ? children : <Navigate to="/" />;
 }
