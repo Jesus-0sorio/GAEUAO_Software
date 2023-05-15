@@ -16,8 +16,8 @@ export const Login = ({ handleModal, visible }) => {
 
 	const { token } = useSelector((state) => state.auth);
 
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [email, setEmail] = useState('prueba@gmail.com');
+	const [password, setPassword] = useState('12345678');
 
 	const handleEmail = (e) => {
 		setEmail(e.target.value);
@@ -67,7 +67,7 @@ export const Login = ({ handleModal, visible }) => {
 
 	useEffect(() => {
 		token && navigate('/inicio');
-		console.log('cuando carga la pg')
+		// console.log('cuando carga la pg')
 	}, [token]);
 
 	return (

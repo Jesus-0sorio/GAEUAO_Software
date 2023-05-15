@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	token: localStorage.getItem('token') ? localStorage.getItem('token') : null,
+	token: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null,
 	isAuthenticated: localStorage.getItem('token') ? true : false,
 	error: null,
 };
@@ -11,6 +11,7 @@ export const authSlice = createSlice({
 	initialState,
 	reducers: {
 		loginSuccess: (state, action) => {
+			console.log(action.payload)
 			state.isAuthenticated = true;
 			state.token = action.payload.token;
 		},

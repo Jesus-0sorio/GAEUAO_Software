@@ -95,7 +95,6 @@ export const Schedule = () => {
 	]);
 	return (
 		<>
-			<NavBarStart />
 			<div className='flex flex-col items-center pt-32'>
 				<Searchbar />
 				<br />

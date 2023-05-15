@@ -4,10 +4,8 @@ import { ConsultancyItem } from './ConsultancyItem';
 export const ConsultanciesTable = ({ title, header, items, className }) => {
 	const [cols, setCols] = useState(header.length);
 	const [dataLoaded, setDataLoaded] = useState(false);
+	//console.log(items)
 
-	useEffect(() => {
-		console.log(header.length)
-	}, []);
 
 	return (
 		<>
@@ -29,7 +27,7 @@ export const ConsultanciesTable = ({ title, header, items, className }) => {
 							))}
 						</div>
 
-						{items.map((item, key) => (
+						{items ? (items.map((item, key) => (
 							<ConsultancyItem
 								key={key}
 								header={header}
@@ -39,7 +37,7 @@ export const ConsultanciesTable = ({ title, header, items, className }) => {
 									key == items.length - 1 ? 'rounded-b-xl' : false
 								}`}
 							/>
-						))}
+						))) : <div className='w-full flex justify-center'>No se encontraron monitorias</div>}
 					</div>
 				</div>
 			)}
