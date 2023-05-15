@@ -5,7 +5,9 @@ export const ConsultanciesTable = ({ title, header, items, className }) => {
 	const [cols, setCols] = useState(header.length);
 	const [dataLoaded, setDataLoaded] = useState(false);
 	//console.log(items)
-
+	useEffect(() => {
+		console.log(header.length)
+	}, [ConsultanciesTable])
 
 	return (
 		<>
@@ -27,7 +29,7 @@ export const ConsultanciesTable = ({ title, header, items, className }) => {
 							))}
 						</div>
 
-						{items ? (items.map((item, key) => (
+						{items.length > 0 && items ? (items.map((item, key) => (
 							<ConsultancyItem
 								key={key}
 								header={header}
