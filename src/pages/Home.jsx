@@ -7,6 +7,7 @@ import { consultaciesServices } from '../services/consultanciesServices';
 
 export const Home = () => {
 	const [consultancies, setConsultancies] = useState();
+	const [completedConsultancies, setCompletedConsultancies] = useState([]);
 
 	const dispatch = useDispatch();
 
@@ -19,7 +20,7 @@ export const Home = () => {
 				token.access_token
 			);
 			setConsultancies(res.data);
-			console.log(res.data);
+			//console.log(res.data);
 		} catch (error) {
 			console.log(error);
 		}
@@ -29,7 +30,6 @@ export const Home = () => {
 		getInfo();
 	}, [Home]);
 
-	const [completedConsultancies, setCompletedConsultancies] = useState([]);
 
 	const [header, setHeader] = useState([
 		{ label: 'Asesor', path: 'advisor' },

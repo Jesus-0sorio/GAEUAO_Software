@@ -11,13 +11,15 @@ export const consultaciesServices = {
 		}
 	},
 
-	getAllConsultancies: async () => {
+	getAllConsultancies: async (token) => {
 		try {
-			const response = await api.get('/monitoring');
+			const response = await api.get('/monitoring', {
+				headers: { Authorization: `Bearer ${token}` },
+			});
 
 			return response;
 		} catch (error) {
-			console.log(error.response.data.message);
+			console.log(error);
 		}
 	},
 
@@ -44,11 +46,46 @@ export const consultaciesServices = {
 		}
 	},
 
+	getHistoryConsultancies: async (id, token) => {
+		try {
+			const response = await api.get(`/monitoring/history/${id}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+
+			return response;
+		} catch (error) {
+			console.log(error.response.data.message);
+		} 
+	},
+
 	getConsultanciesByUser: async (id, token) => {
 		try {
 			const response = await api.get(`/monitoring/student/${id}`, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
+			return response;
+		} catch (error) {
+			console.log(error.response.data.message);
+		}
+	},
+
+	getConsultanciesBySubject: async (id, token) => {
+		try {
+			const response = await api.get(`/monitoring/subject/${id}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			return response;
+		} catch (error) {
+			console.log(error.response.data.message);
+		}
+	},
+
+	updateConsultancy: async (id, data, token) => {
+		try {
+			const response = await api.patch(`/monitoring/${id}`, data, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+
 			return response;
 		} catch (error) {
 			console.log(error.response.data.message);

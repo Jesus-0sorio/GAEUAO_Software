@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Modal } from '../Modal';
+import { consultaciesServices } from '../../services/consultanciesServices';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
-export const ConsultancyModal = ({ id, handleModal }) => {
+export const ConsultancyModal = ({ item, handleModal }) => {
+	const { token } = useSelector((state) => state.auth);
+
 	const location = useLocation();
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
 		if (location.pathname === '/agendar') {
 			setDisabled(false);
+		} else {
+			setTopic(item?.topic);
 		}
-	}, []);
+		//console.log(item);
+	}, [ConsultancyModal]);
 
 	const [cancelModalState, setCancelModalState] = useState('hidden');
 
@@ -22,7 +30,65 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 		}
 	};
 
-	const [tema, setTema] = useState('');
+	const [topic, setTopic] = useState(item.topic ? item.topic : '');
+
+	const [reason, setReason] = useState();
+
+	let startTime = item.start_time.split(':');
+	let endTime = item.end_time.split(':');
+
+	const cancelConsultancy = async () => {
+		console.log(reason)
+		if (reason == '' || !reason) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Escriba una razón de cancelación, por favor!',
+			});
+			return;
+		}
+		try {
+			await consultaciesServices.updateConsultancy(
+				item.id,
+				JSON.stringify({
+					monitoring_status: 'Disponible',
+					reason: reason,
+					topic: '',
+				}),
+				token.access_token
+			);
+
+			//window.location.reload();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const scheduleConsultancy = async () => {
+		if (topic == '' || !topic ) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Escriba un tema para la asesoria, por favor!',
+			});
+			return;
+		}
+		try {
+			await consultaciesServices.updateConsultancy(
+				item.id,
+				JSON.stringify({
+					monitoring_status: 'Proxima',
+					student_id: token.id,
+					topic: topic,
+				}),
+				token.access_token
+			);
+
+			//window.location.reload();
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<>
@@ -38,8 +104,16 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 							className='rounded-full'
 						/>
 						<div className='flex flex-col justify-center'>
-							<h1 className='font-bold'>Pepito Perez</h1>
-							<div className='text-xs'>Ing. Informatica</div>
+							<h1 className='font-bold'>
+								{item.professor_id
+									? item.professor_id.name
+									: item.monitor_id.name}
+							</h1>
+							<div className='text-xs'>
+								{item.professor_id
+									? item.professor_id.degree
+									: item.monitor_id.career}
+							</div>
 						</div>
 					</div>
 					<div className='text-left'>
@@ -60,38 +134,39 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 						<div className='space-y-2'>
 							<div className='leading-none'>
 								<h1 className='font-bold text-sm'>Asignatura</h1>
-								<span className='text-sm'>Calculo 1</span>
+								<span className='text-sm'>{item.subject_id.name}</span>
 							</div>
 							<div className='leading-none'>
 								<h1 className='font-bold text-sm'>Fecha</h1>
-								<span className='text-sm'>12/12/2021</span>
+								<span className='text-sm'>{item.monitor_date}</span>
 							</div>
 							<div className='leading-none'>
 								<h1 className='font-bold text-sm'>Hora</h1>
-								<span className='text-sm'>12:00 - 1:00</span>
+								<span className='text-sm'>{`${startTime[0]}:${startTime[1]} - ${endTime[0]}:${endTime[1]}`}</span>
 							</div>
 						</div>
 						<div className='space-y-2'>
 							<div className='leading-none'>
 								<h1 className='font-bold text-sm'>Salón</h1>
-								<span className='text-sm'>4101</span>
+								<span className='text-sm'>{item.classroom}</span>
 							</div>
 							<div className='leading-none'>
 								<h1 className='font-bold text-sm'>Aulas</h1>
-								<span className='text-sm'>4</span>
+								<span className='text-sm'>{`Aulas ${
+									item.classroom.split('')[0]
+								}`}</span>
 							</div>
 							<div className='leading-none'>
 								<h1 className='font-bold text-sm'>Piso</h1>
-								<span className='text-sm'>1</span>
+								<span className='text-sm'>{item.classroom.split('')[1]}</span>
 							</div>
-							<h1></h1>
 						</div>
 						<div className='col-span-2'>
 							<h1 className='font-bold text-sm mb-2'>Tema</h1>
 
 							<textarea
-								value={tema}
-								onChange={(e) => setTema(e.target.value)}
+								value={topic}
+								onChange={(e) => setTopic(e.target.value)}
 								cols='30'
 								rows='4'
 								placeholder='Tema de la asesorias...'
@@ -101,20 +176,22 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 						</div>
 
 						<div className='flex col-span-2 justify-end mt-3'>
-							{disabled ? (
-								<button
-									onClick={() => handleCancelModal(true)}
-									type='button'
-									className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
-									Cancelar
-								</button>
-							) : (
-								<button
-									type='button'
-									className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
-									Agendar
-								</button>
-							)}
+							{location.pathname != '/historial' &&
+								(disabled ? (
+									<button
+										onClick={() => handleCancelModal(true)}
+										type='button'
+										className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+										Cancelar
+									</button>
+								) : (
+									<button
+										onClick={() => scheduleConsultancy()}
+										type='button'
+										className='text-red-700 hover:text-white border border-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'>
+										Agendar
+									</button>
+								))}
 
 							<button
 								onClick={() => handleModal(false)}
@@ -131,15 +208,31 @@ export const ConsultancyModal = ({ id, handleModal }) => {
 			<Modal
 				handleModal={handleCancelModal}
 				visible={cancelModalState}
-				id={id}
+				id={item.id}
 				component={
 					<>
 						<div className='flex flex-col'>
 							<h1>¿Seguro que quiere cancelar?</h1>
 							<div className='mt-3'>
-								<button className='text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2'>Cancelar</button>
-								<button onClick={() => handleCancelModal(false)}
-								className=' text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2'>No cancelar</button>
+								<textarea
+									onChange={(e) => setReason(e.target.value)}
+									placeholder='Escriba el motivo de la cancelación'
+									className='border border-gray-300 rounded-lg w-full px-2 py-0.5'
+									value={reason}
+									cols='30'
+									rows='4'></textarea>
+								<div>
+									<button
+										onClick={() => cancelConsultancy()}
+										className='text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2'>
+										Cancelar
+									</button>
+									<button
+										onClick={() => handleCancelModal(false)}
+										className=' text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2'>
+										No cancelar
+									</button>
+								</div>
 							</div>
 						</div>
 					</>

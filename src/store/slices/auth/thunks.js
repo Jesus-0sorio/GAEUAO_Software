@@ -7,6 +7,7 @@ import {
 	refreshToken,
 } from './authSlice';
 import { startLoading, stopLoading } from '../loadingSlice';
+import Swal from 'sweetalert2';
 
 export const login = (email, password) => {
 	return async (dispatch, getState) => {
@@ -21,10 +22,16 @@ export const login = (email, password) => {
 					token: response.data,
 				})
 			);
-			dispatch(stopLoading());
 		} catch (error) {
 			console.log(error);
 			dispatch(loginFail(error.message));
-		} 
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Email o contraseña incorrectos',
+			});
+		} finally {
+			dispatch(stopLoading());
+		}
 	};
 };

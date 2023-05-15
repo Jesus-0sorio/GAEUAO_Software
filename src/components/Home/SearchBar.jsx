@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-tailwindcss-select';
 import { FaSearch } from 'react-icons/fa';
+import { subjectsServices } from '../../services/subjectsServices';
 
-export const Searchbar = ({  }) => {
-	const [items, setItems] = React.useState([
-		{ value: 1, label: 'Cálculo' },
-		{ value: 2, label: 'Física' },
-		{ value: 3, label: 'Algoritmia y Programación' },
-	]);
-
-	const [selectedItem, setSelectedItem] = useState('');
+export const Searchbar = ({ getConsultancies }) => {
+	const [selectedItem, setSelectedItem] = useState();
 	const [selectedDate, setSelectedDate] = useState('');
+	const [subjects, setSubjects] = useState([]);
 
 	const handleDateChange = (e) => {
 		setSelectedDate(e.target.value);
@@ -18,7 +14,26 @@ export const Searchbar = ({  }) => {
 
 	const handleItemClick = (item) => {
 		setSelectedItem(item);
+		item?.value ? getConsultancies(item.value) : getConsultancies('');
 	};
+
+	const getSubjects = async () => {
+		try {
+			const res = await subjectsServices.getAll();
+			const subj = res.data.map((item) => {
+				return { value: item.id, label: item.name };
+			});
+			setSubjects(subj);
+			console.log(subj)
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		getSubjects();
+	}, [Searchbar]);
+
 
 	return (
 		<>
@@ -27,18 +42,20 @@ export const Searchbar = ({  }) => {
 					<span>Asignatura:</span>
 				</div>
 				<div className='px-2 col-span-4'>
-					<Select
-						value={selectedItem}
-						onChange={handleItemClick}
-						options={items}
-						isSearchable={true}
-						placeholder='Seleccione...'
-						searchInputPlaceholder='Buscar'
-						noOptionsMessage='No encontrada'
-						primaryColor='red'
-						isClearable={true}
-						classNames={{}}
-					/>
+					{subjects && (
+						<Select
+							value={selectedItem}
+							onChange={handleItemClick}
+							options={subjects}
+							isSearchable={true}
+							placeholder='Seleccione...'
+							searchInputPlaceholder='Buscar'
+							noOptionsMessage='No encontrada'
+							primaryColor='red'
+							isClearable={true}
+							classNames={{}}
+						/>
+					)}
 				</div>
 				<div className='flex items-center col-span-2 h-full w-full relative'>
 					<input

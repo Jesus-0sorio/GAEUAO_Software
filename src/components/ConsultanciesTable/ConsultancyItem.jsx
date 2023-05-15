@@ -80,7 +80,7 @@ export const ConsultancyItem = ({ item, cols, className, header }) => {
 				id={item.id}
 				component={
 					<ConsultancyModal
-						id={item.id}
+						item={item}
 						handleModal={handleModal}
 					/>
 				}

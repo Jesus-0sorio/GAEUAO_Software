@@ -11,7 +11,7 @@ export const ConsultanciesTable = ({ title, header, items, className }) => {
 
 	return (
 		<>
-			{cols && (
+			{header && (
 				<div
 					className={`flex flex-col border border-black rounded-xl shadow-2xl ${className}`}>
 					<div className='bg-red-600 text-white border-b border-black rounded-t-xl text-center text-xl'>
@@ -29,7 +29,7 @@ export const ConsultanciesTable = ({ title, header, items, className }) => {
 							))}
 						</div>
 
-						{items.length > 0 && items ? (items.map((item, key) => (
+						{items?.length > 0 && items ? (items.map((item, key) => (
 							<ConsultancyItem
 								key={key}
 								header={header}

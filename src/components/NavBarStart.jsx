@@ -7,6 +7,7 @@ import { Modal } from './Modal';
 import { Profile } from '../pages/Profile';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/slices/auth/authSlice';
+import { useSelector } from 'react-redux'; 
 
 export const NavBarStart = () => {
 	const dispatch = useDispatch();
@@ -27,9 +28,11 @@ export const NavBarStart = () => {
 		}
 	};
 
+	const { token } = useSelector((state) => state.auth);
+
 	return (
 		<>
-			<nav className='fixed w-screen   bg-white border-gray-200 border-b-2'>
+			<nav className='z-10 fixed w-screen   bg-white border-gray-200 border-b-2'>
 				<div className='flex flex-wrap items-center justify-between mx-auto p-3'>
 					<div className='flex items-center gap-2'>
 						<Link
@@ -103,10 +106,10 @@ export const NavBarStart = () => {
 							id='user-dropdown'>
 							<div className='px-4 py-3'>
 								<span className='block text-sm text-gray-900'>
-									Daniel Morales
+									{ token.name }
 								</span>
 								<span className='block text-sm  text-gray-500 truncate'>
-									usuario@uao.edu.co
+									{ token.email }
 								</span>
 							</div>
 							<ul

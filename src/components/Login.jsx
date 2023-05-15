@@ -7,6 +7,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../store/slices/auth/thunks';
+import  Swal  from 'sweetalert2';
 
 export const Login = ({ handleModal, visible }) => {
 	const modalRef = useRef(null);
@@ -46,17 +47,19 @@ export const Login = ({ handleModal, visible }) => {
 
 	const onLogin = async () => {
 		if (email === '' || password === '') {
-			alert('Por favor ingrese todos los campos');
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Llene todos los campos por favor!',
+			});
 			return;
 		}
 		try {
-			dispatch(
-				login(email, password)
-			);
+			dispatch(login(email, password));
 		} catch (error) {
 			alert('Error al iniciar sesión');
 			console.log(error);
-		} 
+		}
 	};
 
 	useEffect(() => {
@@ -104,6 +107,7 @@ export const Login = ({ handleModal, visible }) => {
 												placeholder='email@example.com'
 											/>
 										</div>
+
 										<div className='flex items-center'>
 											<span className='border border-black rounded-l-md border-r-0 h-12'>
 												<HiOutlineLockClosed size={'44'} />
