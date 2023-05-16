@@ -19,7 +19,7 @@ export const ConsultanciesTable = ({ title, header, items, className }) => {
 					</div>
 					<div className='box'>
 						<div
-							className={`grid grid-cols-${header.length} bg-slate-400 divide-x divide-slate-800`}>
+							className={`${ location.pathname == '/inicio' || location.pathname == '/historial' ? 'grid grid-cols-5 bg-slate-400 divide-x divide-slate-800' : 'grid grid-cols-4 bg-slate-400 divide-x divide-slate-800'}`}>
 							{header.map((item, key) => (
 								<h1
 									key={key}

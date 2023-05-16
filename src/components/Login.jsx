@@ -17,7 +17,7 @@ export const Login = ({ handleModal, visible }) => {
 
 	const { token } = useSelector((state) => state.auth);
 
-	const [email, setEmail] = useState('prueba@gmail.com');
+	const [email, setEmail] = useState('juan@gmail.com');
 	const [password, setPassword] = useState('12345678');
 
 	const handleEmail = (e) => {
